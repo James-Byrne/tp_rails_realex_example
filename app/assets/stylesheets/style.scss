@@ -1,0 +1,22 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #FAFAFA;
+  height: 100vh;
+  width: 100vw;
+  background-image: url('new-york.png');
+  background-size: cover;
+  color: #424242;
+}
+.padding-top {
+  padding-top: 55px;
+}
+hr {
+  border-color: #BDBDBD;
+}
+.payment-text {
+  font-size: 1.5em;
+  padding: 25px;
+}
+.hidden-container {
+  display: none;
+}
