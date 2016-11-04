@@ -14,7 +14,7 @@ class DonationsController < ApplicationController
 
       render(json: result, status: result[:http_code]) && return
     end
-    render(json: {error: "credit card invalid"}, status: 402)
+    render(json: {message: "credit card invalid", code: "error"}, status: 402)
   end
 
 private

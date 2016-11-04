@@ -35,7 +35,13 @@ class DonationsControllerTest < ActionController::TestCase
     assert_match "101", json_result["code"]
   end
 
-  test "should return invalid card message" do
+  test "should return invalid card message when number is invalid" do
+    @valid_params["number"] = 1234567890
+    post :create, params: @valid_params
+    assert_response 402
+    json_result = JSON.parse(response.body)
 
+    assert_match "credit card invalid", json_result["message"]
+    assert_match "error", json_result["error"]
   end
 end
