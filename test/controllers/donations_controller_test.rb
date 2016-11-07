@@ -42,6 +42,6 @@ class DonationsControllerTest < ActionController::TestCase
     json_result = JSON.parse(response.body)
 
     assert_match "credit card invalid", json_result["message"]
-    assert_match "error", json_result["error"]
+    assert_match "error", json_result["code"]
   end
 end
