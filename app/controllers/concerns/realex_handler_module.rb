@@ -70,6 +70,13 @@ module RealexHandlerModule
         result: "fail",
         code: "102"
       }
+    when "205"
+      return {
+        message: "We couldn't contact your bank to finailze the transaction, could you try again?",
+        http_code: 402,
+        result: "fail",
+        code: "205"
+      }
     else
       return {
         message: "An issue has arisen please contact us at support@example.com",

@@ -44,4 +44,14 @@ class DonationsControllerTest < ActionController::TestCase
     assert_match "credit card invalid", json_result["message"]
     assert_match "error", json_result["code"]
   end
+
+  test "should return bank communication error" do
+    @valid_params["amount"] = 1.21
+    post :create, params: @valid_params
+    assert_response 402
+    json_result = JSON.parse(response.body)
+
+    assert_match "We couldn't contact your bank to finailze the transaction, could you try again?", json_result["message"]
+    assert_match "205", json_result["code"]
+  end
 end
