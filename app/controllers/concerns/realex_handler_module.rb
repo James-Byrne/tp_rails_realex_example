@@ -6,7 +6,7 @@ module RealexHandlerModule
 
   # Set the realex gateway
   @@gateway = ActiveMerchant::Billing::RealexGateway.new(
-    login: "YOUR-API-KEY-HERE", #tp api key
+    login: ENV["YOUR_API_KEY"], #tp api key
     password: "secret"
   )
 
