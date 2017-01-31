@@ -53,6 +53,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   unless Rails.env.production?
-    ENV['YOUR_API_KEY'] = "10f8b589d325e6dff0729b00d30da764"
+    ENV['YOUR_API_KEY'] = "YOUR_TESTING_PAYS_API_KEY"
   end
 end
