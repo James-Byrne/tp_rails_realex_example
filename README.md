@@ -9,36 +9,36 @@ In order to run this application you will need the following:
   - We recommend you use a ruby version manager, such as [rvm](https://rvm.io/)
   - If you are using windows you can find a ruby installer [here](http://rubyinstaller.org/downloads/)
 
-## Setup
+## setup
 
-Firstly pull down the repo.
+firstly pull down the repo.
 
 ``` bash
-$ git clone https://github.com/TestingPays/realex_rails_example_app.git
+$ git clone https://github.com/testingpays/realex_rails_example_app.git
 ```
 
-Next enter the directory and install the applications dependencies using bundler
+next enter the directory and install the applications dependencies using bundler
 
 ``` bash
 $ gem install bundler
 $ bundle install
 ```
 
-## Running the application
+## running the application
 
-Now that we have the application installed and our api keys setup we can start using the application. Firstly lets run the tests to make everything is in order.
+now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
 
 ```bash
 $ rails test
 ```
 
-Your tests should have ran successfully. Now to run the application use the following command.
+your tests should have ran successfully. now to run the application use the following command.
 
 ```bash
 $ rails server
 ```
 
-Your application should now be running [locally](http://localhost:3000/charges).
+your application should now be running [locally](http://localhost:3000/charges).
 
 ### API Keys
 
@@ -52,13 +52,13 @@ Insert your Realex test keys to start with
 )
 ```
 
-### Developing with TestingPays
+### Developing with Testing Pays
 
-In order to work with [TestingPays](http://www.testingpays.com) we need to provide your API Key. When working with Realex we replace our login and password fields with your TestingPays API key. This is done in the [realex_handler_module](app/controllers/concerns/realex_handler_module.rb).
+In order to work with [Testing Pays](http://www.testingpays.com) you need to provide your API Key. When working with Realex we replace our login and password fields with your Testing Pays API key. This is done in the [realex_handler_module](app/controllers/concerns/realex_handler_module.rb).
 
 > Note that we ignore the password field and ___do not___ require your actual Realex password.
 
-This application points to the TestingPays Realex auth API when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
+This application points to the Testing Pays Realex auth API when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
 
 ```ruby
 # config/initializers/testing_pays.rb
@@ -75,9 +75,9 @@ if Rails.env.development? || Rails.env.test?
 end
 ```
 
-### Unit Testing with TestingPays
+### Unit Testing with Testing Pays
 
-TestingPays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping, which is based on the cent part of the amount field:
+Testing Pays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping, which is based on the cent part of the amount field:
 
 ```ruby
 amount: X.10  # => insufficient funds
