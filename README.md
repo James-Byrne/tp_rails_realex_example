@@ -9,36 +9,36 @@ In order to run this application you will need the following:
   - We recommend you use a ruby version manager, such as [rvm](https://rvm.io/)
   - If you are using windows you can find a ruby installer [here](http://rubyinstaller.org/downloads/)
 
-## setup
+## Setup
 
-firstly pull down the repo.
+Firstly pull down the repo.
 
 ``` bash
 $ git clone https://github.com/testingpays/realex_rails_example_app.git
 ```
 
-next enter the directory and install the applications dependencies using bundler
+Next enter the directory and install the applications dependencies using bundler
 
 ``` bash
 $ gem install bundler
 $ bundle install
 ```
 
-## running the application
+## Running the application
 
-now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
+Now that we have the application installed and our api keys setup we can start using the application. firstly lets run the tests to make everything is in order.
 
 ```bash
 $ rails test
 ```
 
-your tests should have ran successfully. now to run the application use the following command.
+Your tests should have ran successfully. now to run the application use the following command.
 
 ```bash
 $ rails server
 ```
 
-your application should now be running [locally](http://localhost:3000/charges).
+Your application should now be running [locally](http://localhost:3000/charges).
 
 ### API Keys
 
