@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'minitest/mock'
 
-class DonationsControllerTest < ActionController::TestCase
+class ChargesControllerTest < ActionController::TestCase
 
   # Called before every test
   setup do

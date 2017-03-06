@@ -1,4 +1,4 @@
-class DonationsController < ApplicationController
+class ChargesController < ApplicationController
   include RealexHandlerModule
   before_action :get_card, only: [:create]
 

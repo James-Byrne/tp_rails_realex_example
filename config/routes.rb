@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'donations#index'
+  root 'charges#index'
 
-  resources :donations
+  resources :charges
 end

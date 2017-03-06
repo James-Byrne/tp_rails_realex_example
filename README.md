@@ -1,98 +1,99 @@
-# Testing Pays
-<img src="TestingPaysLogo.png" width="250" height="200" align="right">
-> Demonstrating how Testing Pays API can be used to test Realex's payment processor.
+# Realex Rails Example Application
 
-### Existing Projects
-To integrate an existing project with TestingPays we recommend you follow the short guide on your [instructions page](https://admin.testingpays.com/teams_apis/realex-v1-auth).
+Integrated example application using [Realex's Auth API](https://developer.realexpayments.com/#!/api/process-payment/authorisation).
 
-### Requirements
+## Requirements
+
 In order to run this application you will need the following:
 - [ruby](https://www.ruby-lang.org/en/) (version 2.2+)
-  - We recommend you use [rvm](https://rvm.io/) to manage your ruby versions
+  - We recommend you use a ruby version manager, such as [rvm](https://rvm.io/)
   - If you are using windows you can find a ruby installer [here](http://rubyinstaller.org/downloads/)
 
+## Setup
 
-- [node.js](https://nodejs.org/en/) (latest LTS)
-
-
-##### Accounts
-You will also require an account with [TestingPays](http://www.testingpays.com/).
-
-### Setup
 Firstly pull down the repo.
+
 ``` bash
-$ git clone https://github.com/ThePaymentWorks/tp_rails_realex_example.git
+$ git clone https://github.com/TestingPays/realex_rails_example_app.git
 ```
 
-Next enter the directory and install the applications dependencies.
+Next enter the directory and install the applications dependencies using bundler
 
 ``` bash
-$ cd tp_rails_realex_example/
+$ gem install bundler
 $ bundle install
 ```
 
-##### API Keys
-In order to work with TestingPays we need to provide our TestingPays api key. When working with Realex we replace our login and password fields with our TestingPays API key. This is done in the [realex_handler_module](app/controllers/concerns/realex_handler_module.rb).
+## Running the application
 
-```ruby
-# Set the realex gateway
-@@gateway = ActiveMerchant::Billing::RealexGateway.new(
-  login: "YOUR-API-KEY-HERE", #tp api key
-  password: "secret"
-)
-```
-> Note that we ignore the password field and ___do not___ require your actual Realex password.
-
-
-### Running the application
 Now that we have the application installed and our api keys setup we can start using the application. Firstly lets run the tests to make everything is in order.
 
 ```bash
-$ rails t
+$ rails test
 ```
 
 Your tests should have ran successfully. Now to run the application use the following command.
 
 ```bash
-$ rails s
+$ rails server
 ```
 
-Your application should now be running [locally](http://localhost:3000/donations).
+Your application should now be running [locally](http://localhost:3000/charges).
 
+### API Keys
 
-### Integrating with TestingPays
-We do not recommend you use this application in production. It is just for example purposes.
+Insert your Realex test keys to start with
 
-This application points to the TestingPays Realex auth api when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
+```ruby
+# Set the realex gateway
+@@gateway = ActiveMerchant::Billing::RealexGateway.new(
+  login: "YOUR-API-KEY-HERE",
+  password: "SECRET"
+)
+```
+
+### Developing with TestingPays
+
+In order to work with [TestingPays](http://www.testingpays.com) we need to provide your API Key. When working with Realex we replace our login and password fields with your TestingPays API key. This is done in the [realex_handler_module](app/controllers/concerns/realex_handler_module.rb).
+
+> Note that we ignore the password field and ___do not___ require your actual Realex password.
+
+This application points to the TestingPays Realex auth API when running in both development and testing modes. This is set in the [testing_pays initializer](config/initializers/testing_pays.rb).
 
 ```ruby
 # config/initializers/testing_pays.rb
 if Rails.env.development? || Rails.env.test?
-  module RealexGateway
-    @api_base = "https://api.testingpays.com/realex/v1/auth"
+  ActiveMerchant::Billing::Base.mode = :test
+
+  module ActiveMerchant
+    module Billing
+      class RealexGateway
+        self.live_url = "https://api.testingpays.com/#{ENV["TESTING_PAYS_KEY"]}/realex/v1/auth"
+      end
+    end
   end
 end
 ```
 
+### Unit Testing with TestingPays
 
-### Testing with TestingPays
-TestingPays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping. E.g.
+TestingPays makes testing many types of responses easy. In order to get a particular response simply pass in the associated response mapping, which is based on the cent part of the amount field:
 
 ```ruby
-amount: 91  # => rate_limit_error
-amount: 80  # => card_expired
-amount: 0   # => success
+amount: X.10  # => insufficient funds
+amount: X.21  # => bank communications error
+amount: X.00   # => success
 ```
 
-For a full list of response mappings see the [response mappings table](https://admin.testingpays.com/teams_apis/realex-v1-auth).
+For a full list of response mappings see the [response mappings table](https://admin.testingpays.com/) under your account.
 
 ```ruby
-# test/controllers/donations_controller_test.rb
+# test/controllers/charges_controller_test.rb
 
 require 'test_helper'
 require 'minitest/mock'
 
-class DonationsControllerTest < ActionController::TestCase
+class ChargesControllerTest < ActionController::TestCase
 
   # Called before every test
   setup do

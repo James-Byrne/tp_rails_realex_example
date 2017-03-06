@@ -34,7 +34,7 @@ $(function () {
    */
   function createCharge() {
     // Send a post request to the charges route
-    $.post('/donations', {
+    $.post('/charges', {
       first_name: "john",
       last_name: "doe",
       amount: $('#amount').val(),
