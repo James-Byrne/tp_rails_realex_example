@@ -82,7 +82,7 @@ module RealexHandlerModule
         message: "An issue has arisen please contact us at support@example.com",
         http_code: 422,
         result: "fail",
-        code: ""
+        code: result.params["result"]
       }
     end
   end
